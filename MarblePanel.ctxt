@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=MarblePanel
+comment1.params=count
+comment1.target=void\ setMarbleCount(int)
+comment2.params=g
+comment2.target=void\ paintComponent(java.awt.Graphics)
+numComments=3

@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=SmartStrategy
+comment1.params=marblesLeft
+comment1.target=int\ nextMove(int)
+numComments=2

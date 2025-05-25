@@ -1,0 +1,25 @@
+=== Test Log ===
+
+Test 001 - Human moves 1 marble
+Result: Marbles were reduced by 1, then computer moved next — PASS
+
+Test 002 - Undo Game
+Result: I received an Error - FAIL
+
+Test 003 - Fixed Error- The Cause of the error: Undeclared Observer Method
+Result: Game ran smoothly - Pass
+
+Test 004 - Invalid moves
+Result: Input of 3 marbles was rejected  — PASSed
+
+Test 005 - Undo functionality
+Result: After undoing, previous state was restored correctly — PASS
+
+Test 007 - Saving game
+Result: Game File was saved successfully with that current state — PASS
+
+Test 008 - Loaded game
+Result: Game state was restored, marbles and turn correct — PASS
+
+Test 010 - Game ended
+Result: The Last marble taken, then the human player declared winner — PASS

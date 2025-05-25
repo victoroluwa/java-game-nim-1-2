@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=NimGameGUI
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment2.params=game
+comment2.target=NimGameGUI(NimGame)
+comment3.params=marbles
+comment3.target=void\ playerMove(int)
+comment4.params=
+comment4.target=void\ update()
+numComments=5
