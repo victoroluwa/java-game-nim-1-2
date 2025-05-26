@@ -165,7 +165,6 @@ public class NimGame {
         this.isHumanTurn = isHuman;
     }
     
-    // Optional: manually trigger update
     public void forceNotify() {
         notifyObservers();
     }

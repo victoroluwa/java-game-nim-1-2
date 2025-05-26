@@ -1,25 +1,70 @@
-=== Test Log ===
+Testing
 
-Test 001 - Human moves 1 marble
-Result: Marbles were reduced by 1, then computer moved next — PASS
+Test ID		Description	                   Input	Expected Output
+T001		TheHuman takes 1 marble	Clicked "Take 1"	Marbles decrease by 1
+T002		Human takes 2 marbles	Click "Take 2"	Marbles decrease by 2
+T003		Undo move	After 2 moves, click Undo	Previous marble count and turn
+T004		Reset game	Click Reset	Game restarts with full marbles
+T005		Save game	Choose save file	Game state written to file
+T006		Load game	Choose saved file	Game state restored
+T007		Game over detection	Marbles = 0	Winner is the user that has the last marble.
+T008		Buttons disabled after game over	Game ends	"Take" buttons are disabled
+T009		Marbles show correctly	Start game	Marbles are drawn on screen
+T010		Turn switches correctly	Human moves	Turn switches to computer
+T011		Undo turn	Click Undo	Previous turn restored
+T012		Smart computer move	Marbles = 3	Computer takes 2 to win
+T013		Save keeps move history	Save mid-game	File includes move data
+T014		Load keeps undo working	Load saved game	Undo still works after load
+T015		Labels update	Make a move	Marble and turn labels update
+T016		No negative marbles	Click "Take" too much	Marbles stop at 0
+T017		Save after win	Finish game, then save	File saves final state
+T018		Load mid-game	Load file mid-game	Game changes to loaded state
+T019		Large marble count	Start with 100 marbles	Game runs normally
+T020		Multiple undos	Undo several times	State rewinds correctly
+T021		Computer plays randomly (alt strategy)	Play a few games	Varies between 1 and 2
+T022		Load corrupt file	Try loading bad file	Error message shown
+T023		Click buttons fast	Click quickly	Game handles without crash
+T024		Save without filename	Cancel save	No error, nothing saved
+T025		Load without file	Cancel load	No change to game
+T026		Undo at start	Click Undo at beginning	No crash, nothing happens
+T027		Start new game after win	Click Reset after game over	Game starts fresh
+T028		Reset during game	Click Reset mid-game	Game resets properly
+T029		Save and load twice	Save and load two times	Game always restored correctly
+T030		Turn label on load	Load a game	Label shows correct player's turn
+T031		Take more than allowed	Try move with not enough marbles	Game handles it safely
+T032		Exit safely	Close app during game	No error or crash
+T033            Deleted Chunk of Code because of Time.  
 
-Test 002 - Undo Game
-Result: I received an Error - FAIL
-
-Test 003 - Fixed Error- The Cause of the error: Undeclared Observer Method
-Result: Game ran smoothly - Pass
-
-Test 004 - Invalid moves
-Result: Input of 3 marbles was rejected  — PASSed
-
-Test 005 - Undo functionality
-Result: After undoing, previous state was restored correctly — PASS
-
-Test 007 - Saving game
-Result: Game File was saved successfully with that current state — PASS
-
-Test 008 - Loaded game
-Result: Game state was restored, marbles and turn correct — PASS
-
-Test 010 - Game ended
-Result: The Last marble taken, then the human player declared winner — PASS
+6.2 Test Log (Excerpt)
+•  T001: PASS — Clicked "Take 1", marbles went down by 1.
+•  T002: PASS — Clicked "Take 2", marbles went down by 2.
+•  T003: PASS — Undid move, state went back to before last move.
+•  T004: PASS — "Reset" restarted the game properly.
+•  T005: PASS — Saved game file successfully.
+•  T006: PASS — Loaded file and got the exact same state back.
+•  T007: PASS — Game said who won when marbles hit 0.
+•  T008: PASS — After game over, buttons stopped working.
+•  T009: PASS — Marbles showed correctly in the MarblePanel.
+•  T010: PASS — Turn changed after human played.
+•  T011: PASS — Undo brought back last player's turn.
+•  T012: PASS — Smart strategy worked and took winning move.
+•  T013: PASS — Save file had full move history saved.
+•  T014: PASS — After load, I could still press Undo.
+•  T015: PASS — Labels updated after each move.
+•  T016: PASS — Game stopped at 0 marbles and didn’t crash.
+•  T017: PASS — Saved file after winning, final state was correct.
+•  T018: PASS — Mid-game load changed state to new game.
+•  T019: PASS — Game worked fine with 100 marbles.
+•  T020: PASS — Undid several moves, everything restored well.
+•  T021: PASS — Computer took random moves as expected.
+•  T022: PASS — Tried to load a broken file, got an error message.
+•  T023: PASS — Clicking buttons quickly didn’t break the game.
+•  T024: PASS — Cancelled save, nothing saved and no error.
+•  T025: PASS — Cancelled load, game stayed the same.
+•  T026: PASS — Clicked Undo at start, nothing happened (no crash).
+•  T027: PASS — After winning, clicked Reset and game restarted fine.
+•  T028: PASS — Reset during game worked properly.
+•  T029: PASS — Saved and loaded multiple times, always correct.
+•  T030: PASS — Turn label showed correct turn after load.
+•  T031: PASS — Tried illegal move at low marbles, game stopped it.
+•  T032: PASS — Closed the game window, app exited safely.

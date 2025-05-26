@@ -14,7 +14,9 @@ public class Player {
     public String getName() {
         return name;
     }
-
+    public int nextMove(int marbleSize) {
+        return strategy.nextMove(marbleSize);
+    }
     public MoveStrategy getStrategy() {
         return strategy;
     }
