@@ -1,3 +1,9 @@
+/**
+ * YourStr
+ *
+ * @author  Ifesinachi Paschal Obiors
+ * @version 3.0
+ */
 public class YourStrategy implements MoveStrategy {
 
     @Override

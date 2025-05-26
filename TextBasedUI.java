@@ -103,7 +103,7 @@ public class TextBasedUI {
 
     private void assignMoveFrom(Player player) {
         System.out.println("\nIt is " + player.getName() + "'s turn to play.");
-        int move = player.getMove(game.getMarbleSize());
+        int move = player.nextMove(game.getMarbleSize());
         game.assignMove(move);
         System.out.println(player.getName() + " takes " + move + " marbles.");
         displayMarbles();

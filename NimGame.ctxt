@@ -2,6 +2,7 @@
 comment0.target=NimGame
 comment1.params=humanPlayer\ computerPlayer
 comment1.target=NimGame(Player,\ Player)
+comment1.text=\r\n\ NimGame.\r\n\r\n\ @author\ \ Ifesinachi\ Paschal\ Obiors\r\n\ @version\ 3.0\ \r\n
 comment10.params=
 comment10.target=Player\ getComputerPlayer()
 comment11.params=

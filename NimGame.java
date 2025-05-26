@@ -20,6 +20,12 @@ public class NimGame {
     private Stack<Integer> marbleHistory = new Stack<>();
     private Stack<Boolean> turnHistory = new Stack<>();
     private List<GameObserver> observers = new ArrayList<>();
+    /**
+     * NimGame.
+     *
+     * @author  Ifesinachi Paschal Obiors
+     * @version 3.0 
+     */
 
     public NimGame(Player humanPlayer, Player computerPlayer) {
         this.marbleSize = 10;
@@ -29,7 +35,7 @@ public class NimGame {
     }
 
     public void assignMove(int removeAmount) {
-        // Validate move
+        // The move has to be validated
         if (removeAmount < 1 || removeAmount > 2 || removeAmount > marbleSize) {
             throw new IllegalArgumentException("Invalid move: Must remove 1 or 2 marbles and cannot exceed remaining marbles");
         }

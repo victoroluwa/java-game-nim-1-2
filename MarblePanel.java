@@ -3,6 +3,12 @@ import java.awt.*;
 
 public class MarblePanel extends JPanel {
     private int marbleCount = 10;
+    /**
+     * MarblePanel
+     *
+     * @author  Ifesinachi Paschal Obiors
+     * @version 3.0
+     */
 
     public void setMarbleCount(int count) {
         this.marbleCount = count;

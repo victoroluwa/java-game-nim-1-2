@@ -4,6 +4,12 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.Arrays;
 
+/**
+ * GUI class NimGameGUI.
+ *
+ * @author  Ifesinachi Paschal Obiors
+ * @version 3.0
+ */
 public class NimGameGUI extends JFrame implements GameObserver {
     private NimGame game;
     private JLabel marbleLabel;
