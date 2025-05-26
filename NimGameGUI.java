@@ -79,13 +79,21 @@ public class NimGameGUI extends JFrame implements GameObserver {
         JButton load = new JButton("Load");
 
         take1.addActionListener(e -> {
-            game.assignMove(1);
-            game.notifyObservers();
+            try {
+                game.assignMove(1);
+                log.append("Human takes 1 marble\n");
+            } catch (IllegalArgumentException ex) {
+                log.append("Invalid move: " + ex.getMessage() + "\n");
+            }
         });
 
         take2.addActionListener(e -> {
-            game.assignMove(2);
-            game.notifyObservers();
+            try {
+                game.assignMove(2);
+                log.append("Human takes 2 marbles\n");
+            } catch (IllegalArgumentException ex) {
+                log.append("Invalid move: " + ex.getMessage() + "\n");
+            }
         });
         
         undo.addActionListener(e -> game.undoLastMove());
@@ -160,13 +168,17 @@ public class NimGameGUI extends JFrame implements GameObserver {
 
     private void playerMove(int marbles) {
         if (game.isHumanTurn()) {
-            game.assignMove(marbles);
-            log.append("Human takes " + marbles + "\n");
+            try {
+                game.assignMove(marbles);
+                log.append("Human takes " + marbles + "\n");
 
-            if (!game.checkWinner()) {
-                int compMove = game.getComputerPlayer().makeMove(game.getMarbleSize());
-                game.assignMove(compMove);
-                log.append("Computer takes " + compMove + "\n");
+                if (!game.checkWinner()) {
+                    int compMove = game.getComputerPlayer().makeMove(game.getMarbleSize());
+                    game.assignMove(compMove);
+                    log.append("Computer takes " + compMove + "\n");
+                }
+            } catch (IllegalArgumentException ex) {
+                log.append("Invalid move: " + ex.getMessage() + "\n");
             }
         }
         if (game.checkWinner()) {
@@ -190,8 +202,8 @@ public class NimGameGUI extends JFrame implements GameObserver {
             take1.setEnabled(false);
             take2.setEnabled(false);
         } else {
-            take1.setEnabled(true);
-            take2.setEnabled(true);
+            take1.setEnabled(game.isHumanTurn());
+            take2.setEnabled(game.isHumanTurn() && game.getMarbleSize() >= 2);
         }
         marbleLabel.setText("Marbles left: " + game.getMarbleSize());
         turnLabel.setText("Turn: " + (game.isHumanTurn() ? game.getHumanPlayer().getName() : game.getComputerPlayer().getName()));
