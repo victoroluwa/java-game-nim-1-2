@@ -21,8 +21,6 @@ public class NimGame {
     private Stack<Boolean> turnHistory = new Stack<>();
     private List<GameObserver> observers = new ArrayList<>();
 
-
-
     public NimGame(Player humanPlayer, Player computerPlayer) {
         this.marbleSize = 10;
         this.humanPlayer = humanPlayer;
@@ -31,7 +29,12 @@ public class NimGame {
     }
 
     public void assignMove(int removeAmount) {
-        // I will now save current state before move
+        // Validate move
+        if (removeAmount < 1 || removeAmount > 2 || removeAmount > marbleSize) {
+            throw new IllegalArgumentException("Invalid move: Must remove 1 or 2 marbles and cannot exceed remaining marbles");
+        }
+        
+        // Save current state before move
         marbleHistory.push(marbleSize);
         turnHistory.push(isHumanTurn);
         marbleSize -= removeAmount;
@@ -40,10 +43,14 @@ public class NimGame {
     }
     
     public void makeComputerMoveIfNeeded() {
-    if (!isHumanTurn) {
-        int move = computerPlayer.makeMove(marbleSize);
-        assignMove(move);
-    }
+        if (!isHumanTurn) {
+            int move = computerPlayer.makeMove(marbleSize);
+            // Validate computer move
+            if (move < 1 || move > 2 || move > marbleSize) {
+                move = Math.min(marbleSize, 1); // Default to safe move if computer strategy returns invalid move
+            }
+            assignMove(move);
+        }
     }
 
     public boolean checkWinner() {
@@ -52,51 +59,46 @@ public class NimGame {
 
     public void saveGame() {
         try (FileWriter writer = new FileWriter("nim_save.txt")) {
-        writer.write(marbleSize + "\n");
-        writer.write(isHumanTurn + "\n");
+            writer.write(marbleSize + "\n");
+            writer.write(isHumanTurn + "\n");
 
-        // This will save undo history
-        writer.write(String.join(",", marbleHistory.stream()
-                .map(String::valueOf).toArray(String[]::new)) + "\n");
-        writer.write(String.join(",", turnHistory.stream()
-                .map(String::valueOf).toArray(String[]::new)) + "\n");
+            writer.write(String.join(",", marbleHistory.stream()
+                    .map(String::valueOf).toArray(String[]::new)) + "\n");
+            writer.write(String.join(",", turnHistory.stream()
+                    .map(String::valueOf).toArray(String[]::new)) + "\n");
 
-        System.out.println("Game saved successfully.");
-    } 
-        catch (IOException e) {
-        System.out.println("Error saving game: " + e.getMessage());
-    }
+            System.out.println("Game saved successfully.");
+        } catch (IOException e) {
+            System.out.println("Error saving game: " + e.getMessage());
+        }
     }
 
     public void loadGame() {
         try (BufferedReader reader = new BufferedReader(new FileReader("nim_save.txt"))) {
-        marbleSize = Integer.parseInt(reader.readLine());
-        isHumanTurn = Boolean.parseBoolean(reader.readLine());
+            marbleSize = Integer.parseInt(reader.readLine());
+            isHumanTurn = Boolean.parseBoolean(reader.readLine());
 
-        // Here, I restore marble history
-        String[] marbleHistoryValues = reader.readLine().split(",");
-        marbleHistory.clear();
-        notifyObservers();
-        if (!marbleHistoryValues[0].isEmpty()) {
-            Arrays.stream(marbleHistoryValues)
-                  .map(Integer::parseInt)
-                  .forEach(marbleHistory::push);
+            String[] marbleHistoryValues = reader.readLine().split(",");
+            marbleHistory.clear();
+            notifyObservers();
+            if (!marbleHistoryValues[0].isEmpty()) {
+                Arrays.stream(marbleHistoryValues)
+                      .map(Integer::parseInt)
+                      .forEach(marbleHistory::push);
+            }
+
+            String[] turnHistoryValues = reader.readLine().split(",");
+            turnHistory.clear();
+            if (!turnHistoryValues[0].isEmpty()) {
+                Arrays.stream(turnHistoryValues)
+                      .map(Boolean::parseBoolean)
+                      .forEach(turnHistory::push);
+            }
+
+            System.out.println("Game loaded. Marbles: " + marbleSize + ", Turn: " + (isHumanTurn ? "Human" : "Computer"));
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("Error loading game: " + e.getMessage());
         }
-
-        // Under this, I will restore the turn history
-        String[] turnHistoryValues = reader.readLine().split(",");
-        turnHistory.clear();
-        if (!turnHistoryValues[0].isEmpty()) {
-            Arrays.stream(turnHistoryValues)
-                  .map(Boolean::parseBoolean)
-                  .forEach(turnHistory::push);
-        }
-
-        System.out.println("Game loaded. Marbles: " + marbleSize + ", Turn: " + (isHumanTurn ? "Human" : "Computer"));
-    } 
-        catch (IOException | NumberFormatException e) {
-        System.out.println("Error loading game: " + e.getMessage());
-    }
     }
 
     public void undoLastMove() {
@@ -109,12 +111,11 @@ public class NimGame {
             System.out.println("No moves to undo.\n");
         }
     }
-
     
     public void resetGame() {
         Random random = new Random();
         this.marbleSize = 10; 
-        this.isHumanTurn = random.nextBoolean(); // This will randomly choose who starts
+        this.isHumanTurn = random.nextBoolean();
         marbleHistory.clear();
         turnHistory.clear();
         notifyObservers();
@@ -122,12 +123,11 @@ public class NimGame {
                            (isHumanTurn ? "Human" : "Computer") + " goes first.");
     }
     
-    
     public Player getHumanPlayer() {
         return humanPlayer;
     }
 
-    public Player getComputerPlayer(){
+    public Player getComputerPlayer() {
         return computerPlayer;
     }
 
@@ -139,8 +139,7 @@ public class NimGame {
         return isHumanTurn;
     }
     
-    public void addObserver(GameObserver observer) 
-        {
+    public void addObserver(GameObserver observer) {
         observers.add(observer);
     }
     
@@ -149,8 +148,9 @@ public class NimGame {
             observer.update();
         }
     }
+
     public Stack<Integer> getMarbleHistory() {
-    return marbleHistory;
+        return marbleHistory;
     }
     
     public Stack<Boolean> getTurnHistory() {
@@ -168,5 +168,4 @@ public class NimGame {
     public void forceNotify() {
         notifyObservers();
     }
-
 }
